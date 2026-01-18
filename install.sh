@@ -40,9 +40,9 @@ gen_apikey() {
     type cscli > /dev/null
 
     if [ "$?" -eq "0" ] ; then
-        SUFFIX=`tr -dc A-Za-z0-9 </dev/urandom | head -c 8`
+        SUFFIX=`tdate +%s`
         API_KEY=`sudo cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw`
-        PORT=$(cscli config show --key "Config.API.Server.ListenURI"|cut -d ":" -f2)
+        PORT=$(sudo cscli config show --key "Config.API.Server.ListenURI" | cut -d ":" -f2)
         if [ ! -z "$PORT" ]; then
             LAPI_DEFAULT_PORT=${PORT}
         fi
@@ -52,7 +52,7 @@ gen_apikey() {
     fi
     CROWDSEC_LAPI_URL="http://127.0.0.1:${LAPI_DEFAULT_PORT}"
     mkdir -p "${CONFIG_PATH}"
-    API_KEY=${API_KEY} CROWDSEC_LAPI_URL=${CROWDSEC_LAPI_URL} envsubst '$API_KEY $CROWDSEC_LAPI_URL' < ${LUA_MOD_DIR}/config_example.conf | sudo tee -a "${CONFIG_PATH}crowdsec-nginx-bouncer.conf" >/dev/null
+    API_KEY=${API_KEY} CROWDSEC_LAPI_URL=${CROWDSEC_LAPI_URL} envsubst '$API_KEY $CROWDSEC_LAPI_URL' < ${LUA_MOD_DIR}/config_example.conf | sudo tee -a "${CONFIG_PATH}crowdsec-nginx-bouncer.conf" > /dev/null
 }
 
 check_nginx_dependency() {
