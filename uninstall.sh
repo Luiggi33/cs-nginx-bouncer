@@ -5,6 +5,7 @@ NGINX_CONF="crowdsec_nginx.conf"
 NGINX_CONF_DIR="/etc/nginx/conf.d/"
 ACCESS_FILE="access.lua"
 LIB_PATH="/usr/local/lua/crowdsec/"
+CONFIG_PATH="/etc/crowdsec/bouncers/"
 DATA_PATH="/var/lib/crowdsec/lua/"
 SILENT="false"
 
@@ -71,10 +72,11 @@ uninstall() {
 	rm ${NGINX_CONF_DIR}/${NGINX_CONF}
     rm -rf ${DATA_PATH}
     rm -rf ${LIB_PATH}
+    rm ${CONFIG_PATH}crowdsec-nginx-bouncer.conf
 }
 
 if ! [ $(id -u) = 0 ]; then
-    log_err "Please run the uninstall script as root or with sudo"
+    echo "Error: please run the uninstall script as root or with sudo"
     exit 1
 fi
 requirement
