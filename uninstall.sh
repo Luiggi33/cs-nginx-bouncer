@@ -52,7 +52,7 @@ remove_nginx_dependency() {
         dpkg -l | grep ${dep} > /dev/null
         if [[ $? == 0 ]]; then
             if [[ ${SILENT} == "true" ]]; then
-                sudo apt-get install -y -qq ${dep} > /dev/null && echo "${dep} successfully removed"
+                apt-get remove --purge -y -qq ${dep} > /dev/null && echo "${dep} successfully removed"
             else
                 echo "${dep} found, do you want to remove it (Y/n)? "
                 read answer
