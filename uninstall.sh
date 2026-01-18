@@ -69,7 +69,7 @@ remove_nginx_dependency() {
 
 
 uninstall() {
-	rm ${NGINX_CONF_DIR}/${NGINX_CONF}
+    rm ${NGINX_CONF_DIR}${NGINX_CONF}
     rm -rf ${DATA_PATH}
     rm -rf ${LIB_PATH}
     rm ${CONFIG_PATH}crowdsec-nginx-bouncer.conf
@@ -79,7 +79,9 @@ if ! [ $(id -u) = 0 ]; then
     echo "Error: please run the uninstall script as root or with sudo"
     exit 1
 fi
+
 requirement
 remove_nginx_dependency
 uninstall
+
 echo "crowdsec-nginx-bouncer uninstalled successfully"
