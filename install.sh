@@ -40,7 +40,7 @@ gen_apikey() {
     type cscli > /dev/null
 
     if [ "$?" -eq "0" ] ; then
-        SUFFIX=`tdate +%s`
+        SUFFIX=`date +%s`
         API_KEY=`sudo cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw`
         PORT=$(sudo cscli config show --key "Config.API.Server.ListenURI" | cut -d ":" -f2)
         if [ ! -z "$PORT" ]; then
