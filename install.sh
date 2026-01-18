@@ -67,7 +67,7 @@ check_nginx_dependency() {
         dpkg -l | grep ${dep} > /dev/null
         if [[ $? != 0 ]]; then
             if [[ ${SILENT} == "true" ]]; then
-                sudo apt-get install -y -qq ${dep} > /dev/null && echo "${dep} successfully installed"
+                sudo apt install -y -qq ${dep} > /dev/null && echo "${dep} successfully installed"
             else
                 echo "${dep} not found, do you want to install it (Y/n)? "
                 read answer
@@ -75,7 +75,7 @@ check_nginx_dependency() {
                     answer="y"
                 fi
                 if [ "$answer" != "${answer#[Yy]}" ] ;then
-                    sudo apt-get install -y -qq ${dep} > /dev/null && echo "${dep} successfully installed"
+                    sudo apt install -y -qq ${dep} > /dev/null && echo "${dep} successfully installed"
                 else
                     echo "unable to continue without ${dep}. Exiting" && exit 1
                 fi
